@@ -92,21 +92,27 @@ class ReadProperties extends BaseTask implements ConfigAwareInterface
           $defaults = clone $this->finder;
           $packageOverrides = clone $this->finder;
           $projectConfig = [];
+
           // Get the property overrides for this project.
           $root = $this->getConfig()->get('digipolis.root.project', false);
           if ($root && file_exists($root . '/properties.yml')) {
               $this->logger()->debug('Parsing config from ' . $root . '/properties.yml.');
               $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
           }
+
           // Get the default properties.
           $parsedConfig = $this->parseConfigFiles($defaults->name('default.properties.yml'))
               // Get the property overrides for robo packages.
               + $this->parseConfigFiles($packageOverrides->name('properties.yml'))
+              // Add the project overrides last.
               + $projectConfig;
+
+          // Save the settings to config.
           $config = $this->getConfig();
           foreach ($parsedConfig as $key => $value) {
               $config->set($key, $value);
           }
+
       } catch (\Exception $exception) {
           return Result::fromException($this, $exception);
       }
