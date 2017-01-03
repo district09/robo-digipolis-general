@@ -21,11 +21,8 @@ use Robo\Task\BaseTask;
  * ```
  *
  */
-class DetermineRoot extends BaseTask implements ConfigAwareInterface
+class DetermineRoot extends BaseTask
 {
-
-    use ConfigAwareTrait;
-
     /**
      * The directory in which to search for the project root.
      *
@@ -65,6 +62,10 @@ class DetermineRoot extends BaseTask implements ConfigAwareInterface
         $this->dir = realpath($dir);
 
         return $this;
+    }
+
+    public function setDrupalFinder(DrupalFinder $finder) {
+      $this->finder = $finder;
     }
 
     /**

@@ -23,10 +23,8 @@ use Symfony\Component\Yaml\Yaml;
  * ```
  *
  */
-class ReadProperties extends BaseTask implements ConfigAwareInterface
+class ReadProperties extends BaseTask
 {
-
-    use ConfigAwareTrait;
 
     /**
      * The finder object to scan for files.
