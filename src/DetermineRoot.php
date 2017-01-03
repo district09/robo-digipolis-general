@@ -64,8 +64,9 @@ class DetermineRoot extends BaseTask
         return $this;
     }
 
-    public function setDrupalFinder(DrupalFinder $finder) {
-      $this->finder = $finder;
+    public function setDrupalFinder(DrupalFinder $finder)
+    {
+        $this->finder = $finder;
     }
 
     /**
