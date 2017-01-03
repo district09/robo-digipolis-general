@@ -106,6 +106,7 @@ class ReadProperties extends BaseTask implements ConfigAwareInterface
               + $this->parseConfigFiles($packageOverrides->name('properties.yml'))
               // Add the project overrides last.
               + $projectConfig;
+          // @todo: Add properties from command line arguments?
 
           // Save the settings to config.
           $config = $this->getConfig();
