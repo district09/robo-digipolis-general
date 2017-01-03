@@ -45,11 +45,12 @@ class ReadProperties extends BaseTask implements ConfigAwareInterface
      * @throws \InvalidArgumentException
      *   If one of the directories does not exist.
      */
-    public function __construct($dirs = []) {
+    public function __construct($dirs = [])
+    {
         $this->finder = new Finder();
         $this->finder->files();
         if ($dirs) {
-          $this->finder->in($dirs);
+            $this->finder->in($dirs);
         }
     }
 
@@ -87,37 +88,38 @@ class ReadProperties extends BaseTask implements ConfigAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function run() {
-      try {
-          $defaults = clone $this->finder;
-          $packageOverrides = clone $this->finder;
-          $projectConfig = [];
+    public function run()
+    {
+        try {
+            $defaults = clone $this->finder;
+            $packageOverrides = clone $this->finder;
+            $projectConfig = [];
 
-          // Get the property overrides for this project.
-          $root = $this->getConfig()->get('digipolis.root.project', false);
-          if ($root && file_exists($root . '/properties.yml')) {
-              $this->logger()->debug('Parsing config from ' . $root . '/properties.yml.');
-              $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
-          }
+            // Get the property overrides for this project.
+            $root = $this->getConfig()->get('digipolis.root.project', false);
+            if ($root && file_exists($root . '/properties.yml')) {
+                $this->logger()->debug('Parsing config from ' . $root . '/properties.yml.');
+                $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
+            }
 
-          // Get the default properties.
-          $parsedConfig = $this->parseConfigFiles($defaults->name('default.properties.yml'))
-              // Get the property overrides for robo packages.
-              + $this->parseConfigFiles($packageOverrides->name('properties.yml'))
-              // Add the project overrides last.
-              + $projectConfig;
-          // @todo: Add properties from command line arguments?
+            // Get the default properties.
+            $parsedConfig = $this->parseConfigFiles($defaults->name('default.properties.yml'))
+                // Get the property overrides for robo packages.
+                + $this->parseConfigFiles($packageOverrides->name('properties.yml'))
+                // Add the project overrides last.
+                + $projectConfig;
+            // @todo: Add properties from command line arguments?
 
-          // Save the settings to config.
-          $config = $this->getConfig();
-          foreach ($parsedConfig as $key => $value) {
-              $config->set($key, $value);
-          }
+            // Save the settings to config.
+            $config = $this->getConfig();
+            foreach ($parsedConfig as $key => $value) {
+                $config->set($key, $value);
+            }
 
-      } catch (\Exception $exception) {
-          return Result::fromException($this, $exception);
-      }
-      return Result::success($this, 'Parsed all config.');
+        } catch (\Exception $exception) {
+            return Result::fromException($this, $exception);
+        }
+        return Result::success($this, 'Parsed all config.');
     }
 
     /**
@@ -129,7 +131,8 @@ class ReadProperties extends BaseTask implements ConfigAwareInterface
      * @return array
      *   The parsed config.
      */
-    protected function parseConfigFiles(Finder $files) {
+    protected function parseConfigFiles(Finder $files)
+    {
         $config = [];
         foreach ($files as $file) {
             // Check if this is part of a Robo package.

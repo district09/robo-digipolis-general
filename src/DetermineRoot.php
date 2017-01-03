@@ -80,5 +80,4 @@ class DetermineRoot extends BaseTask implements ConfigAwareInterface
 
         return Result::success($this, 'Found project root at ' . $root . '.');
     }
-
 }

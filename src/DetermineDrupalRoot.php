@@ -33,5 +33,4 @@ class DetermineDrupalRoot extends DetermineRoot
 
         return Result::success($this, 'Found Drupal root at ' . $root . '.');
     }
-
 }
