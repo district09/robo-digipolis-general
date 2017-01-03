@@ -115,7 +115,6 @@ class ReadProperties extends BaseTask implements ConfigAwareInterface
             foreach ($parsedConfig as $key => $value) {
                 $config->set($key, $value);
             }
-
         } catch (\Exception $exception) {
             return Result::fromException($this, $exception);
         }
