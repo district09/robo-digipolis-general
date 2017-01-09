@@ -57,36 +57,50 @@ class DetermineRootTest extends \PHPUnit_Framework_TestCase implements Container
     }
 
     public function testRun() {
-        $finderMock = $this->getMockBuilder('\DrupalFinder\DrupalFinder')
+        $composerRoot = $this->getRandomString();
+
+        $file1 = $this->getMockBuilder('\Symfony\Component\Finder\SplFileInfo')
+          ->disableOriginalConstructor()
+          ->getMock();
+        $file1
+          ->expects($this->once())
+          ->method('getRealPath')
+          ->willReturn($composerRoot . '/subir/composer.json');
+
+        $file2 = $this->getMockBuilder('\Symfony\Component\Finder\SplFileInfo')
+          ->disableOriginalConstructor()
+          ->getMock();
+        $file2
+          ->expects($this->once())
+          ->method('getRealPath')
+          ->willReturn($composerRoot . '/composer.json');
+
+        $finderMock = $this->getMockBuilder('\Symfony\Component\Finder\Finder')
+          ->setMethods(['getIterator'])
           ->getMock();
         $finderMock
-          ->expects($this->exactly(2))
-          ->method('locateRoot')
-          ->will($this->onConsecutiveCalls(true, false));
-        $composerroot = $this->getRandomString();
-
-        $finderMock
-          ->expects($this->once())
-          ->method('getComposerRoot')
-          ->willReturn($composerroot);
+          ->expects($this->exactly(3))
+          ->method('getIterator')
+          ->will($this->onConsecutiveCalls([$file1, $file2], [], []));
 
         // First run, root found.
         $result = $this->taskDetermineRoot(__DIR__)
-          ->setDrupalFinder($finderMock)
+          ->finder($finderMock)
           ->run();
-        $this->assertEquals($composerroot, $this->getConfig()->get('digipolis.root.project'));
+        $this->assertEquals($composerRoot, $this->getConfig()->get('digipolis.root.project'));
         $this->assertEquals(0, $result->getExitCode());
-        $this->assertEquals('Found project root at ' . $composerroot . '.', $result->getMessage());
+        $this->assertEquals('Found root at ' . $composerRoot . '.', $result->getMessage());
 
         // Reset the config.
         $this->getConfig()->set('digipolis.root.project', null);
 
         // Second run, root not found.
         $result = $this->taskDetermineRoot(__DIR__)
-          ->setDrupalFinder($finderMock)
+          ->finder($finderMock)
           ->run();
-        $this->assertNull($this->getConfig()->get('digipolis.root.project'));
-        $this->assertEquals(1, $result->getExitCode());
-        $this->assertEquals('Could not find the project root in ' . __DIR__ . '.', $result->getMessage());
+        $cwd = getcwd();
+        $this->assertEquals($cwd, $this->getConfig()->get('digipolis.root.project'));
+        $this->assertEquals(0, $result->getExitCode());
+        $this->assertEquals('Found root at ' . $cwd . '.', $result->getMessage());
     }
 }

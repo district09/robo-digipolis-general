@@ -9,27 +9,31 @@ trait loadTasks
      *
      * @param string $dir
      *    The directory in which to search for the project root.
+     * @param int $depth
+     *   The maximum depth to traverse directories.
      *
      * @return \DigipolisGent\Robo\Task\General\DetermineRoot
      *   The determine root task.
      */
-    protected function taskDetermineRoot($dir = null)
+    protected function taskDetermineRoot($dir = null, $depth = 2)
     {
-        return $this->task(DetermineRoot::class, $dir);
+        return $this->task(DetermineRoot::class, $dir, $depth);
     }
 
     /**
-     * Creates a DetermineDrupalRoot task.
+     * Creates a DetermineWebRoot task.
      *
      * @param string $dir
-     *    The directory in which to search for the Drupal root.
+     *    The directory in which to search for the web root.
+     * @param int $depth
+     *   The maximum depth to traverse directories.
      *
-     * @return \DigipolisGent\Robo\Task\General\DetermineDrupalRoot
-     *   The determine Drupal root task.
+     * @return \DigipolisGent\Robo\Task\General\DetermineWebRoot
+     *   The determine web root task.
      */
-    protected function taskDetermineDrupalRoot($dir = null)
+    protected function taskDetermineWebRoot($dir = null, $depth = 2)
     {
-        return $this->task(DetermineDrupalRoot::class, $dir);
+        return $this->task(DetermineWebRoot::class, $dir, $depth);
     }
 
     /**

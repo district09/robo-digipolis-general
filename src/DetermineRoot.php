@@ -2,11 +2,9 @@
 
 namespace DigipolisGent\Robo\Task\General;
 
-use DrupalFinder\DrupalFinder;
-use Robo\Common\ConfigAwareTrait;
-use Robo\Contract\ConfigAwareInterface;
 use Robo\Result;
 use Robo\Task\BaseTask;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Determines the root of a Drupal project and adds it to the config.
@@ -31,11 +29,32 @@ class DetermineRoot extends BaseTask
     protected $dir;
 
     /**
+     * The maximum depth to traverse directories.
+     *
+     * @var int
+     */
+    protected $depth;
+
+    /**
      * The Drupal finder to use to find the project root.
      *
-     * @var \DrupalFinder\DrupalFinder
+     * @var \Symfony\Component\Finder\Finder
      */
     protected $finder;
+
+    /**
+     * The file names that determine the root dir.
+     *
+     * @var array
+     */
+    protected $searchFiles = ['properties.yml', 'composer.json'];
+
+    /**
+     * The config key where the root should be saved.
+     *
+     * @var string
+     */
+    protected $configKey = 'digipolis.root.project';
 
     /**
      * Creates a DetermineRoot object.
@@ -43,10 +62,11 @@ class DetermineRoot extends BaseTask
      * @param string $dir
      *   The directory in which to search for the project root.
      */
-    public function __construct($dir = null)
+    public function __construct($dir = null, $depth = 2)
     {
         $this->dir = is_null($dir) ? getcwd() : realpath($dir);
-        $this->finder = new DrupalFinder();
+        $this->depth = $depth;
+        $this->finder = new Finder();
     }
 
     /**
@@ -64,9 +84,32 @@ class DetermineRoot extends BaseTask
         return $this;
     }
 
-    public function setDrupalFinder(DrupalFinder $finder)
+    /**
+     * Sets the finder.
+     *
+     * @param Finder $finder
+     *
+     * @return $this
+     */
+    public function finder(Finder $finder)
     {
         $this->finder = $finder;
+
+        return $this;
+    }
+
+    /**
+     * Sets the search files.
+     *
+     * @param array $searchFiles
+     *   The files to search for when searching for the project root.
+     *
+     * @return $this
+     */
+    public function searchFiles(array $searchFiles) {
+      $this->searchFiles = $searchFiles;
+
+      return $this;
     }
 
     /**
@@ -74,12 +117,23 @@ class DetermineRoot extends BaseTask
      */
     public function run()
     {
-        if (!$this->finder->locateRoot($this->dir)) {
-            return Result::error($this, 'Could not find the project root in ' . $this->dir . '.');
+        $finder = clone $this->finder;
+        $finder->in([$this->dir])->depth('<=' . $this->depth)->files();
+        $rootCandidates = [];
+        foreach ($this->searchFiles as $searchFile) {
+            $fileFinder = clone $finder;
+            $fileFinder->name($searchFile);
+            foreach($fileFinder->getIterator() as $file) {
+                $rootCandidates[] = dirname($file->getRealPath());
+            }
+            if ($rootCandidates) {
+              break;
+            }
         }
-        $root = $this->finder->getComposerRoot();
-        $this->getConfig()->set('digipolis.root.project', $root);
+        usort($rootCandidates, function ($a, $b) {return count(explode(DIRECTORY_SEPARATOR, $a)) - count(explode(DIRECTORY_SEPARATOR, $b));});
+        $root =  $rootCandidates ? reset($rootCandidates) : getcwd();
+        $this->getConfig()->set($this->configKey, $root);
 
-        return Result::success($this, 'Found project root at ' . $root . '.');
+        return Result::success($this, 'Found root at ' . $root . '.');
     }
 }
