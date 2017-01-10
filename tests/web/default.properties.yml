@@ -1,0 +1,3 @@
+default_property: 'default_value'
+overridden_property: 'default_value'
+overridden_property2: 'default_value'

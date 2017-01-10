@@ -87,7 +87,7 @@ class DetermineRoot extends BaseTask
     /**
      * Sets the finder.
      *
-     * @param Finder $finder
+     * @param \Symfony\Component\Finder\Finder $finder
      *
      * @return $this
      */

@@ -34,6 +34,13 @@ class ReadProperties extends BaseTask
     protected $finder;
 
     /**
+     * The directories to search in.
+     *
+     * @var array
+     */
+    protected $dirs;
+
+    /**
      * Searches files and directories which match defined rules.
      *
      * @param string|array $dirs
@@ -46,10 +53,21 @@ class ReadProperties extends BaseTask
     public function __construct($dirs = [])
     {
         $this->finder = new Finder();
-        $this->finder->files();
-        if ($dirs) {
-            $this->finder->in($dirs);
-        }
+        $this->dirs = $dirs;
+    }
+
+    /**
+     * Sets the finder.
+     *
+     * @param \Symfony\Component\Finder\Finder $finder
+     *
+     * @return $this
+     */
+    public function finder(Finder $finder)
+    {
+        $this->finder = $finder;
+
+        return $this;
     }
 
     /**
@@ -66,19 +84,7 @@ class ReadProperties extends BaseTask
      */
     public function in($dirs)
     {
-        $this->finder->in($dirs);
-
-        return $this;
-    }
-
-    /**
-     * Forces the following of symlinks.
-     *
-     * @return $this
-     */
-    public function followSymlinks()
-    {
-        $this->finder->followLinks();
+        $this->dirs = $dirs;
 
         return $this;
     }
@@ -89,6 +95,7 @@ class ReadProperties extends BaseTask
     public function run()
     {
         try {
+            $this->finder->in($this->dirs)->files();
             $defaults = clone $this->finder;
             $packageOverrides = clone $this->finder;
             $projectConfig = [];
@@ -100,12 +107,14 @@ class ReadProperties extends BaseTask
                 $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
             }
 
-            // Get the default properties.
-            $parsedConfig = $this->parseConfigFiles($defaults->name('default.properties.yml'))
-                // Get the property overrides for robo packages.
-                + $this->parseConfigFiles($packageOverrides->name('properties.yml'))
-                // Add the project overrides last.
-                + $projectConfig;
+            $parsedConfig = array_merge(
+              // Get the default properties.
+              $this->parseConfigFiles($defaults->name('default.properties.yml')),
+              // Get the property overrides for robo packages.
+              $this->parseConfigFiles($packageOverrides->name('properties.yml')),
+              // Add the project overrides last.
+              $projectConfig
+            );
             // @todo: Add properties from command line arguments?
 
             // Save the settings to config.
@@ -122,7 +131,7 @@ class ReadProperties extends BaseTask
     /**
      * Helper function to parse config files.
      *
-     * @param Finder $files
+     * @param \Symfony\Component\Finder\Finder $files
      *   The files to parse.
      *
      * @return array
@@ -138,7 +147,7 @@ class ReadProperties extends BaseTask
                 continue;
             }
             $this->logger()->debug('Parsing config from ' . $path . '.');
-            $config += Yaml::parse($path);
+            $config += Yaml::parse(file_get_contents($path));
         }
         return $config;
     }
