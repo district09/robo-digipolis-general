@@ -62,6 +62,8 @@ class ReadProperties extends BaseTask
      * @param \Symfony\Component\Finder\Finder $finder
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function finder(Finder $finder)
     {
@@ -81,6 +83,8 @@ class ReadProperties extends BaseTask
      *
      * @throws \InvalidArgumentException
      *   If one of the directories does not exist.
+     *
+     * @codeCoverageIgnore
      */
     public function in($dirs)
     {

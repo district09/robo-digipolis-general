@@ -76,6 +76,8 @@ class DetermineRoot extends BaseTask
      *   The directory to set.
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function dir($dir)
     {
@@ -90,6 +92,8 @@ class DetermineRoot extends BaseTask
      * @param \Symfony\Component\Finder\Finder $finder
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function finder(Finder $finder)
     {
@@ -105,6 +109,8 @@ class DetermineRoot extends BaseTask
      *   The files to search for when searching for the project root.
      *
      * @return $this
+     *
+     * @codeCoverageIgnore
      */
     public function searchFiles(array $searchFiles)
     {
