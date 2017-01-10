@@ -132,10 +132,10 @@ class DetermineRoot extends BaseTask
             }
         }
         usort(
-          $rootCandidates,
-          function ($a, $b) {
-              return count(explode(DIRECTORY_SEPARATOR, $a)) - count(explode(DIRECTORY_SEPARATOR, $b));
-          }
+            $rootCandidates,
+            function ($a, $b) {
+                return count(explode(DIRECTORY_SEPARATOR, $a)) - count(explode(DIRECTORY_SEPARATOR, $b));
+            }
         );
         $root =  $rootCandidates ? reset($rootCandidates) : getcwd();
         $this->getConfig()->set($this->configKey, $root);
