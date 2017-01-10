@@ -8,6 +8,10 @@ engines:
     checks:
       CleanCode/StaticAccess:
         enabled: false
+      Naming/ShortVariable:
+        enabled: false
+      Naming/ShortMethodName:
+        enabled: false
   duplication:
     enabled: true
     config:

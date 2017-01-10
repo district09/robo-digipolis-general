@@ -23,11 +23,10 @@ class DetermineWebRoot extends DetermineRoot
     /**
      * {@inheritdoc}
      */
-     protected $searchFiles = ['index.php', 'index.html', 'index.htm', 'home.php', 'home.html', 'home.htm'];
+    protected $searchFiles = ['index.php', 'index.html', 'index.htm', 'home.php', 'home.html', 'home.htm'];
 
-     /**
+    /**
      * {@inheritdoc}
      */
-     protected $configKey = 'digipolis.root.web';
-
+    protected $configKey = 'digipolis.root.web';
 }

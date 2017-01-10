@@ -108,12 +108,12 @@ class ReadProperties extends BaseTask
             }
 
             $parsedConfig = array_merge(
-              // Get the default properties.
-              $this->parseConfigFiles($defaults->name('default.properties.yml')),
-              // Get the property overrides for robo packages.
-              $this->parseConfigFiles($packageOverrides->name('properties.yml')),
-              // Add the project overrides last.
-              $projectConfig
+                // Get the default properties.
+                $this->parseConfigFiles($defaults->name('default.properties.yml')),
+                // Get the property overrides for robo packages.
+                $this->parseConfigFiles($packageOverrides->name('properties.yml')),
+                // Add the project overrides last.
+                $projectConfig
             );
             // @todo: Add properties from command line arguments?
 

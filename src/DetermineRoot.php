@@ -106,10 +106,11 @@ class DetermineRoot extends BaseTask
      *
      * @return $this
      */
-    public function searchFiles(array $searchFiles) {
-      $this->searchFiles = $searchFiles;
+    public function searchFiles(array $searchFiles)
+    {
+        $this->searchFiles = $searchFiles;
 
-      return $this;
+        return $this;
     }
 
     /**
@@ -123,14 +124,19 @@ class DetermineRoot extends BaseTask
         foreach ($this->searchFiles as $searchFile) {
             $fileFinder = clone $finder;
             $fileFinder->name($searchFile);
-            foreach($fileFinder->getIterator() as $file) {
+            foreach ($fileFinder->getIterator() as $file) {
                 $rootCandidates[] = dirname($file->getRealPath());
             }
             if ($rootCandidates) {
-              break;
+                break;
             }
         }
-        usort($rootCandidates, function ($a, $b) {return count(explode(DIRECTORY_SEPARATOR, $a)) - count(explode(DIRECTORY_SEPARATOR, $b));});
+        usort(
+          $rootCandidates,
+          function ($a, $b) {
+              return count(explode(DIRECTORY_SEPARATOR, $a)) - count(explode(DIRECTORY_SEPARATOR, $b));
+          }
+        );
         $root =  $rootCandidates ? reset($rootCandidates) : getcwd();
         $this->getConfig()->set($this->configKey, $root);
 
