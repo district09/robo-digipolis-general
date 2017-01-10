@@ -58,9 +58,10 @@ class DetermineRootTest extends \PHPUnit_Framework_TestCase implements Container
 
     public function testRun() {
         $composerRoot = $this->getRandomString();
-
         $file1 = $this->getMockBuilder('\Symfony\Component\Finder\SplFileInfo')
-          ->disableOriginalConstructor()
+          // Does not work in PHP 5.5. See https://github.com/sebastianbergmann/phpunit/issues/1409
+          //->disableOriginalConstructor()
+          ->setConstructorArgs([__FILE__, __FILE__, __FILE__])
           ->getMock();
         $file1
           ->expects($this->once())
@@ -68,7 +69,9 @@ class DetermineRootTest extends \PHPUnit_Framework_TestCase implements Container
           ->willReturn($composerRoot . '/subir/composer.json');
 
         $file2 = $this->getMockBuilder('\Symfony\Component\Finder\SplFileInfo')
-          ->disableOriginalConstructor()
+          // Does not work in PHP 5.5. See https://github.com/sebastianbergmann/phpunit/issues/1409
+          //->disableOriginalConstructor()
+          ->setConstructorArgs([__FILE__, __FILE__, __FILE__])
           ->getMock();
         $file2
           ->expects($this->once())
