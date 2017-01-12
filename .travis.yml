@@ -11,6 +11,6 @@ script:
   - vendor/bin/robo test:coverage-codeclimate
 addons:
   code_climate:
-    repo_token: 26661f402d5d329c0022c8bf8db70b94e5b8e7d5b2c0dca909cbf47e5f2edaf8
+    repo_token: e091e028f8091a949f82929ebdc4de18ba54e140c28c17d443b8857525a731ac
 after_success:
   - vendor/bin/test-reporter
