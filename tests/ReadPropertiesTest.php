@@ -67,7 +67,7 @@ class ReadPropertiesTest extends \PHPUnit_Framework_TestCase implements Containe
         $this->assertEquals('root_value', $this->getConfig()->get('overridden_property2'));
         $this->assertEquals('root_value', $this->getConfig()->get('custom_property2'));
         $this->assertEquals(0, $result->getExitCode());
-        $this->assertNull($result->$this->getConfig()->get('no_robo'));
+        $this->assertNull($this->getConfig()->get('no_robo'));
         $this->assertEquals('Parsed all config.', $result->getMessage());
 
         // Test with invalid yaml.
