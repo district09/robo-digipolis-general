@@ -5,19 +5,19 @@ namespace DigipolisGent\Robo\Task\General;
 trait loadTasks
 {
     /**
-     * Creates a DetermineRoot task.
+     * Creates a DetermineProjectRoot task.
      *
      * @param string $dir
      *    The directory in which to search for the project root.
      * @param int $depth
      *   The maximum depth to traverse directories.
      *
-     * @return \DigipolisGent\Robo\Task\General\DetermineRoot
+     * @return \DigipolisGent\Robo\Task\General\DetermineProjectRoot
      *   The determine root task.
      */
-    protected function taskDetermineRoot($dir = null, $depth = 2)
+    protected function taskDetermineProjectRoot($dir = null, $depth = 2)
     {
-        return $this->task(DetermineRoot::class, $dir, $depth);
+        return $this->task(DetermineProjectRoot::class, $dir, $depth);
     }
 
     /**

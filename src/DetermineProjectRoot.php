@@ -7,19 +7,19 @@ use Robo\Task\BaseTask;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Determines the root of a Drupal project and adds it to the config.
+ * Determines the root of a web project and adds it to the config.
  * Config is available for classes implementing
  * \Robo\Contract\ConfigAwareInterface and using \Robo\Common\ConfigAwareTrait.
  *
  * ``` php
- * $this->taskDetermineRoot()
+ * $this->taskDetermineProjectRoot()
  *     ->dir(getcwd())
  *     ->run();
  * $this->getConfig()->get('digipolis.root.project');
  * ```
  *
  */
-class DetermineRoot extends BaseTask
+class DetermineProjectRoot extends BaseTask
 {
     /**
      * The directory in which to search for the project root.
@@ -36,7 +36,7 @@ class DetermineRoot extends BaseTask
     protected $depth;
 
     /**
-     * The Drupal finder to use to find the project root.
+     * The Symfony finder to use to find the project root.
      *
      * @var \Symfony\Component\Finder\Finder
      */
@@ -57,7 +57,7 @@ class DetermineRoot extends BaseTask
     protected $configKey = 'digipolis.root.project';
 
     /**
-     * Creates a DetermineRoot object.
+     * Creates a DetermineProjectRoot object.
      *
      * @param string $dir
      *   The directory in which to search for the project root.

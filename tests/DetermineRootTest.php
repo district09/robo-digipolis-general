@@ -87,7 +87,7 @@ class DetermineRootTest extends \PHPUnit_Framework_TestCase implements Container
           ->will($this->onConsecutiveCalls([$file1, $file2], [], []));
 
         // First run, root found.
-        $result = $this->taskDetermineRoot(__DIR__)
+        $result = $this->taskDetermineProjectRoot(__DIR__)
           ->finder($finderMock)
           ->run();
         $this->assertEquals($composerRoot, $this->getConfig()->get('digipolis.root.project'));
@@ -98,7 +98,7 @@ class DetermineRootTest extends \PHPUnit_Framework_TestCase implements Container
         $this->getConfig()->set('digipolis.root.project', null);
 
         // Second run, root not found.
-        $result = $this->taskDetermineRoot(__DIR__)
+        $result = $this->taskDetermineProjectRoot(__DIR__)
           ->finder($finderMock)
           ->run();
         $cwd = getcwd();

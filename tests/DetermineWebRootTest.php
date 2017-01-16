@@ -60,7 +60,7 @@ class DetermineWebRootTest extends DetermineRootTest
           ->finder($finderMock)
           ->run();
         $cwd = getcwd();
-        $this->assertEquals($cwd, $this->getConfig()->get('digipolis.root.project'));
+        $this->assertEquals($cwd, $this->getConfig()->get('digipolis.root.web'));
         $this->assertEquals(0, $result->getExitCode());
         $this->assertEquals('Found root at ' . $cwd . '.', $result->getMessage());
     }

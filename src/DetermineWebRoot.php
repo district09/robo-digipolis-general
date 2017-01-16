@@ -17,7 +17,7 @@ use Robo\Result;
  * ```
  *
  */
-class DetermineWebRoot extends DetermineRoot
+class DetermineWebRoot extends DetermineProjectRoot
 {
 
     /**

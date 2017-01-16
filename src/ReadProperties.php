@@ -119,7 +119,6 @@ class ReadProperties extends BaseTask
                 // Add the project overrides last.
                 $projectConfig
             );
-            // @todo: Add properties from command line arguments?
 
             // Save the settings to config.
             $config = $this->getConfig();
