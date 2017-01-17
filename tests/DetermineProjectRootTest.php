@@ -10,7 +10,7 @@ use Robo\Robo;
 use Robo\TaskAccessor;
 use Symfony\Component\Console\Output\NullOutput;
 
-class DetermineRootTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInterface, ConfigAwareInterface
+class DetermineProjectRootTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInterface, ConfigAwareInterface
 {
 
     use \DigipolisGent\Robo\Task\General\loadTasks;

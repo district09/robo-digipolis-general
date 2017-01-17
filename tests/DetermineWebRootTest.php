@@ -2,15 +2,7 @@
 
 namespace DigipolisGent\Tests\Robo\Task\General;
 
-use League\Container\ContainerAwareInterface;
-use League\Container\ContainerAwareTrait;
-use Robo\Contract\ConfigAwareInterface;
-use Robo\Common\CommandArguments;
-use Robo\Robo;
-use Robo\TaskAccessor;
-use Symfony\Component\Console\Output\NullOutput;
-
-class DetermineWebRootTest extends DetermineRootTest
+class DetermineWebRootTest extends DetermineProjectRootTest
 {
 
     public function testRun() {

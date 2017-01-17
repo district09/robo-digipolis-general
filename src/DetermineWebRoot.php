@@ -2,8 +2,6 @@
 
 namespace DigipolisGent\Robo\Task\General;
 
-use Robo\Result;
-
 /**
  * Determines the Web root of a Web project and adds it to the config.
  * Config is available for classes implementing

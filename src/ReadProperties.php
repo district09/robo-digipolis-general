@@ -2,8 +2,6 @@
 
 namespace DigipolisGent\Robo\Task\General;
 
-use Robo\Common\ConfigAwareTrait;
-use Robo\Contract\ConfigAwareInterface;
 use Robo\Result;
 use Robo\Task\BaseTask;
 use Symfony\Component\Finder\Finder;
