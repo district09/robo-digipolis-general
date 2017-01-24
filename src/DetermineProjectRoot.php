@@ -29,6 +29,13 @@ class DetermineProjectRoot extends BaseTask
     protected $dir;
 
     /**
+     * Directories or files to exclude.
+     *
+     * @var string
+     */
+    protected $exclude = [];
+
+    /**
      * The maximum depth to traverse directories.
      *
      * @var int
@@ -87,6 +94,23 @@ class DetermineProjectRoot extends BaseTask
     }
 
     /**
+     * Exclude certain directories or files.
+     *
+     * @param string|array $dirs
+     *   A directory path or an array of directories
+     *
+     * @return $this
+     *
+     * @codeCoverageIgnore
+     */
+    public function exclude($dirs)
+    {
+        $this->exclude = array_merge($this->exclude, (array) $dirs);
+
+        return $this;
+    }
+
+    /**
      * Sets the finder.
      *
      * @param \Symfony\Component\Finder\Finder $finder
@@ -125,7 +149,7 @@ class DetermineProjectRoot extends BaseTask
     public function run()
     {
         $finder = clone $this->finder;
-        $finder->in([$this->dir])->depth('<=' . $this->depth)->files();
+        $finder->in([$this->dir])->exclude($this->exclude)->depth('<=' . $this->depth)->files();
         $rootCandidates = [];
         foreach ($this->searchFiles as $searchFile) {
             $fileFinder = clone $finder;
