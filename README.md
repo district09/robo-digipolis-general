@@ -5,7 +5,7 @@ General Digipolis tasks for Robo Task Runner
 [![Latest Stable Version](https://poser.pugx.org/digipolisgent/robo-digipolis-general/v/stable)](https://packagist.org/packages/digipolisgent/robo-digipolis-general)
 [![Latest Unstable Version](https://poser.pugx.org/digipolisgent/robo-digipolis-general/v/unstable)](https://packagist.org/packages/digipolisgent/robo-digipolis-general)
 [![Total Downloads](https://poser.pugx.org/digipolisgent/robo-digipolis-general/downloads)](https://packagist.org/packages/digipolisgent/robo-digipolis-general)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/{github-name}/{repo}/{branch}/badge.svg)](https://travis-ci.org/{your-repository})
+[![PHP 7 ready](http://php7ready.timesplinter.ch/digipolisgent/robo-digipolis-general/develop/badge.svg)](https://travis-ci.org/digipolisgent/robo-digipolis-general)
 [![License](https://poser.pugx.org/digipolisgent/robo-digipolis-general/license)](https://packagist.org/packages/digipolisgent/robo-digipolis-general)
 
 [![Build Status](https://travis-ci.org/digipolisgent/robo-digipolis-general.svg?branch=develop)](https://travis-ci.org/digipolisgent/robo-digipolis-general)
