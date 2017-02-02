@@ -20,7 +20,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Provides test coverage for Scrutinizer
+     * Provides test coverage for Codeclimate.
      */
     public function testCoverageCodeclimate()
     {
