@@ -18,10 +18,10 @@ General Digipolis tasks for Robo Task Runner
 
 ### DetermineProjectRoot
 
-Determines the root folder of the project by looking for certain files in the given folder.
-By default it looks for a `properties.yml` or a `composer.json` file.
-Usually this task is ran before running an other task in the same command so the config
-value can be passed to that task.
+Determines the root folder of the project by looking for certain files in the
+given folder. By default it looks for a `properties.yml` or a `composer.json`
+file. Usually this task is ran before running an other task in the same command
+so the config value can be passed to that task.
 
 ```php
 // Recursively search for a project root folder in the current directory with a
@@ -38,11 +38,11 @@ $root = $this->getConfig()->get('digipolis.root.project');
 
 ### DetermineWebRoot
 
-Determines the web root folder of the project by looking for certain files in the given folder.
-By default it looks for a `index.php`, `index.html`, `index.htm`, `home.php`, `home.html` or a
-`home.htm` file.
-Usually this task is ran before running an other task in the same command so the config
-value can be passed to that task.
+Determines the web root folder of the project by looking for certain files in
+the given folder. By default it looks for a `index.php`, `index.html`,
+`index.htm`, `home.php`, `home.html` or a `home.htm` file. Usually this task is
+ran before running an other task in the same command so the config value can be
+passed to that task.
 
 ```php
 // Recursively search for a web root folder in the current directory with a
@@ -59,10 +59,11 @@ $root = $this->getConfig()->get('digipolis.root.web');
 
 ### ReadProperties
 
-Reads values from yaml files (`default.properties.yml` and `properties.yml`) and stores
-them in config. Values from `default.properties.yml` will be overridden if the exist in a
-`properties.yml`. If a valid path is set for `digipolis.root.web` in config, and
-a `properties.yml` file exists in that path, those values will have top priority.
+Reads values from yaml files (`default.properties.yml` and `properties.yml`) and
+stores them in config. Values from `default.properties.yml` will be overridden
+if the exist in a `properties.yml`. If a valid path is set for
+`digipolis.root.web` in config, and a `properties.yml` file exists in that path,
+those values will have top priority.
 
 ```php
 // Search for default.properties.yml and properties.yml files in the current
@@ -76,14 +77,16 @@ $root = $this->getConfig()->get('my.config.value');
 ## Using these tasks in a command
 
 If you want to use these tasks in a command, you can use the
-`\DigipolisGent\Robo\Task\General\Common\DigipolisPropertiesAware` trait and implement the
-`\DigipolisGent\Robo\Task\General\Common\DigipolisPropertiesAwareInterface` interface.
-This will expose a readProperties method to which you can pass the paths to the project root,
-the web root and the vendor folder. If the tasks to determine the project and web root are
-available on the class using the trait, and no project or web root are given as a parameter
-to the `readProperties` method, these tasks will be used to determine the paths. They both
-default to the current working directory. The vendor folder defaults to the vendor folder in
-the web root. Your `RoboFile.php` might look something like this:
+`\DigipolisGent\Robo\Task\General\Common\DigipolisPropertiesAware` trait and
+implement the
+`\DigipolisGent\Robo\Task\General\Common\DigipolisPropertiesAwareInterface`
+interface. This will expose a readProperties method to which you can pass the
+paths to the project root, the web root and the vendor folder. If the tasks to
+determine the project and web root are available on the class using the trait,
+and no project or web root are given as a parameter to the `readProperties`
+method, these tasks will be used to determine the paths. They both default to
+the current working directory. The vendor folder defaults to the vendor folder
+in the web root. Your `RoboFile.php` might look something like this:
 
 ```php
 class RoboFile extends \Robo\Tasks implements \DigipolisGent\Robo\Task\General\Common\DigipolisPropertiesAwareInterface
@@ -91,9 +94,21 @@ class RoboFile extends \Robo\Tasks implements \DigipolisGent\Robo\Task\General\C
     use \DigipolisGent\Robo\Task\General\Common\DigipolisPropertiesAware;
     use \DigipolisGent\Robo\Task\General\loadTasks;
 
-    public function myCommand($arg1, $arg2, $opts = ['root|r' => null, 'webroot|wr' => null, 'vendor-folder|vf' => null])
+    public function myCommand(
+        $arg1,
+        $arg2,
+        $opts = [
+            'root|r' => null,
+            'webroot|wr' => null,
+            'vendor-folder|vf' => null,
+        ]
+    )
     {
-        $this->readProperties($opts['root'], $opts['webroot'], $opts['vendor-folder']);
+        $this->readProperties(
+            $opts['root'],
+            $opts['webroot'],
+            $opts['vendor-folder']
+        );
         // All properties are stored in config now, so execute the command.
         $this->doCommand();
     }
