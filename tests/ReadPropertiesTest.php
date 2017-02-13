@@ -2,7 +2,6 @@
 
 namespace DigipolisGent\Tests\Robo\Task\General;
 
-use DigipolisGent\Robo\Task\General\Common\DigipolisPropertiesAwareInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use Robo\Common\CommandArguments;
@@ -11,7 +10,7 @@ use Robo\Robo;
 use Robo\TaskAccessor;
 use Symfony\Component\Console\Output\NullOutput;
 
-class ReadPropertiesTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInterface, ConfigAwareInterface, DigipolisPropertiesAwareInterface
+class ReadPropertiesTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInterface, ConfigAwareInterface
 {
 
     use \DigipolisGent\Robo\Task\General\loadTasks;
