@@ -28,11 +28,15 @@ trait DigipolisPropertiesAware
     {
         if (!$this->propertiesRead) {
             if (is_null($root)) {
-                $this->taskDetermineProjectRoot()->run();
+                if (is_callable([$this, 'taskDetermineProjectRoot'])) {
+                    $this->taskDetermineProjectRoot()->run();
+                }
                 $root = $this->getConfig()->get('digipolis.root.project', getcwd());
             }
             if (is_null($web)) {
-                $this->taskDetermineWebRoot()->run();
+                if (is_callable([$this, 'taskDetermineWebRoot'])) {
+                    $this->taskDetermineWebRoot()->run();
+                }
                 $web = $this->getConfig()->get('digipolis.root.web', $root);
             }
             if (is_null($vendor)) {
