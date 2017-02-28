@@ -2,6 +2,7 @@
 
 namespace DigipolisGent\Robo\Task\General;
 
+use Grasmash\YamlExpander\Expander;
 use Robo\Result;
 use Robo\Task\BaseTask;
 use Symfony\Component\Finder\Finder;
@@ -109,14 +110,14 @@ class ReadProperties extends BaseTask
                 $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
             }
 
-            $parsedConfig = array_merge(
+            $parsedConfig = Expander::expandArrayProperties(array_merge(
                 // Get the default properties.
                 $this->parseConfigFiles($defaults->name('default.properties.yml')),
                 // Get the property overrides for robo packages.
                 $this->parseConfigFiles($packageOverrides->name('properties.yml')),
                 // Add the project overrides last.
                 $projectConfig
-            );
+            ));
 
             // Save the settings to config.
             $config = $this->getConfig();
