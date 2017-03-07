@@ -106,7 +106,11 @@ class ReadProperties extends BaseTask
             // Get the property overrides for this project.
             $root = $this->getConfig()->get('digipolis.root.project', false);
             if ($root && file_exists($root . '/properties.yml')) {
-                $this->logger()->debug('Parsing config from ' . $root . '/properties.yml.');
+                $this->printTaskInfo(
+                    sprintf(
+                        'Parsing config from %s.', $root . '/properties.yml'
+                    )
+                );
                 $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
             }
 
@@ -148,7 +152,7 @@ class ReadProperties extends BaseTask
             if (!file_exists(dirname($path) . '/RoboFile.php')) {
                 continue;
             }
-            $this->logger()->debug('Parsing config from ' . $path . '.');
+            $this->printTaskInfo(sprintf('Parsing config from %s.', $path));
             $config += Yaml::parse(file_get_contents($path));
         }
         return $config;
