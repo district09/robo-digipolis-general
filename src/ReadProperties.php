@@ -108,7 +108,8 @@ class ReadProperties extends BaseTask
             if ($root && file_exists($root . '/properties.yml')) {
                 $this->printTaskInfo(
                     sprintf(
-                        'Parsing config from %s.', $root . '/properties.yml'
+                        'Parsing config from %s.',
+                        $root . '/properties.yml'
                     )
                 );
                 $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
