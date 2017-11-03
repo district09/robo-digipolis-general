@@ -10,7 +10,7 @@ General Digipolis tasks for Robo Task Runner
 [![Build Status](https://travis-ci.org/digipolisgent/robo-digipolis-general.svg?branch=develop)](https://travis-ci.org/digipolisgent/robo-digipolis-general)
 [![Maintainability](https://api.codeclimate.com/v1/badges/37c4961b0a0d7f6ff3d0/maintainability)](https://codeclimate.com/github/digipolisgent/robo-digipolis-general/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/37c4961b0a0d7f6ff3d0/test_coverage)](https://codeclimate.com/github/digipolisgent/robo-digipolis-general/test_coverage)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/digipolisgent/robo-digipolis-general/develop/badge.svg)](https://travis-ci.org/digipolisgent/robo-digipolis-general)
+[![PHP 7 ready](https://php7ready.timesplinter.ch/digipolisgent/robo-digipolis-general/develop/badge.svg)](https://travis-ci.org/digipolisgent/robo-digipolis-general)
 
 ## Tasks in this package
 
