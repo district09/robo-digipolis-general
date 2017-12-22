@@ -158,8 +158,8 @@ class ReadProperties extends BaseTask
                 continue;
             }
             $this->printTaskInfo(sprintf('Parsing config from %s.', $path));
-            $this->printTaskDebug(sprintf('Parsing %s', $contents));
             $contents = file_get_contents($path);
+            $this->printTaskDebug(sprintf('Parsing %s', $contents));
             $config += Yaml::parse($contents);
         }
         return $config;
