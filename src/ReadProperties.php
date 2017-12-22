@@ -112,7 +112,9 @@ class ReadProperties extends BaseTask
                         $root . '/properties.yml'
                     )
                 );
-                $projectConfig = Yaml::parse(file_get_contents($root . '/properties.yml'));
+                $contents = file_get_contents($root . '/properties.yml');
+                $this->printTaskDebug(sprintf('Parsing %s', $contents));
+                $projectConfig = Yaml::parse($contents);
             }
 
             $parsedConfig = Expander::expandArrayProperties(array_merge(
@@ -123,6 +125,8 @@ class ReadProperties extends BaseTask
                 // Add the project overrides last.
                 $projectConfig
             ));
+
+            $this->printTaskDebug(sprintf('Resulted config: %s', print_r($parsedConfig, true)));
 
             // Save the settings to config.
             $config = $this->getConfig();
@@ -154,7 +158,9 @@ class ReadProperties extends BaseTask
                 continue;
             }
             $this->printTaskInfo(sprintf('Parsing config from %s.', $path));
-            $config += Yaml::parse(file_get_contents($path));
+            $this->printTaskDebug(sprintf('Parsing %s', $contents));
+            $contents = file_get_contents($path);
+            $config += Yaml::parse($contents);
         }
         return $config;
     }
