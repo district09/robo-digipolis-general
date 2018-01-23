@@ -61,7 +61,6 @@ class ReadPropertiesTest extends \PHPUnit_Framework_TestCase implements Containe
         $this->getConfig()->set('digipolis.root.project', __DIR__ . '/root');
         $result = $this->taskReadProperties(__DIR__ . '/web')
           ->run();
-        print_r($this->getConfig()->export());
         $this->assertEquals('default_value', $this->getConfig()->get('default_property'));
         $this->assertEquals('overridden_value', $this->getConfig()->get('overridden_property'));
         $this->assertEquals('custom_value', $this->getConfig()->get('custom_property'));
