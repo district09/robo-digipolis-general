@@ -1,1 +1,3 @@
 default_vendor: default_vendor
+nested:
+  default_vendor: default_vendor
