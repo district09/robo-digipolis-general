@@ -117,14 +117,18 @@ class ReadProperties extends BaseTask
                 $projectConfig = Yaml::parse($contents);
             }
 
-            $parsedConfig = Expander::expandArrayProperties(array_merge(
-                // Get the default properties.
-                $this->parseConfigFiles($defaults->name('default.properties.yml')),
-                // Get the property overrides for robo packages.
-                $this->parseConfigFiles($packageOverrides->name('properties.yml')),
-                // Add the project overrides last.
-                $projectConfig
-            ));
+            $parsedConfig = Expander::expandArrayProperties(
+                \Ckr\Util\ArrayMerger::doMerge(
+                    \Ckr\Util\ArrayMerger::doMerge(
+                        // Get the default properties.
+                        $this->parseConfigFiles($defaults->name('default.properties.yml')),
+                        // Get the property overrides for robo packages.
+                        $this->parseConfigFiles($packageOverrides->name('properties.yml'))
+                    ),
+                    // Add the project overrides last.
+                    $projectConfig
+                )
+            );
 
             $this->printTaskDebug(sprintf('Resulted config: %s', print_r($parsedConfig, true)));
 

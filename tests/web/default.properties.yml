@@ -1,3 +1,7 @@
 default_property: 'default_value'
 overridden_property: 'default_value'
 overridden_property2: 'default_value'
+nested:
+  default_property: 'default_value'
+  overridden_property: 'default_value'
+  overridden_property2: 'default_value'
