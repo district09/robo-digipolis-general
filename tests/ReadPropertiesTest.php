@@ -70,6 +70,16 @@ class ReadPropertiesTest extends \PHPUnit_Framework_TestCase implements Containe
         $this->assertNull($this->getConfig()->get('no_robo'));
         $this->assertEquals('Parsed all config.', $result->getMessage());
 
+        // Test nested values.
+        $nested = $this->getConfig()->get('nested');
+        $this->assertEquals('default_value', $nested['default_property']);
+        $this->assertEquals('overridden_value', $nested['overridden_property']);
+        $this->assertEquals('custom_value', $nested['custom_property']);
+        $this->assertEquals('root_value', $nested['overridden_property2']);
+        $this->assertEquals('root_value', $nested['custom_property2']);
+        $this->assertEquals(0, $result->getExitCode());
+        $this->assertFalse(isset($nested['no_robo']));
+
         // Test with invalid yaml.
         $this->getConfig()->set('digipolis.root.project', __DIR__ . '/invalidyml');
         $result = $this->taskReadProperties(__DIR__ . '/web')

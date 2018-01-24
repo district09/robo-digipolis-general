@@ -1,2 +1,5 @@
 overridden_property2: 'root_value'
 custom_property2: 'root_value'
+nested:
+  overridden_property2: 'root_value'
+  custom_property2: 'root_value'
