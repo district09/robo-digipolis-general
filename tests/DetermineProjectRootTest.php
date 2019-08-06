@@ -4,13 +4,14 @@ namespace DigipolisGent\Tests\Robo\Task\General;
 
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use PHPUnit\Framework\TestCase;
 use Robo\Contract\ConfigAwareInterface;
 use Robo\Common\CommandArguments;
 use Robo\Robo;
 use Robo\TaskAccessor;
 use Symfony\Component\Console\Output\NullOutput;
 
-class DetermineProjectRootTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInterface, ConfigAwareInterface
+class DetermineProjectRootTest extends TestCase implements ContainerAwareInterface, ConfigAwareInterface
 {
 
     use \DigipolisGent\Robo\Task\General\loadTasks;

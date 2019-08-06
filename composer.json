@@ -11,7 +11,7 @@
         "ckr/arraymerger": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.4"
+        "phpunit/phpunit": "~6.0"
     },
     "autoload": {
         "psr-4": {
