@@ -3,6 +3,7 @@ env:
     - CC_TEST_REPORTER_ID=b3a53e3cc45912bd4bf403e4f71ea9ad19527fecabdddc9d80f802c3db24f6bd
 language: php
 php:
+  - 7.3
   - 7.2
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
