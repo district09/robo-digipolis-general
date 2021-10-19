@@ -2,7 +2,7 @@
 
 namespace DigipolisGent\Robo\Task\General;
 
-use Grasmash\YamlExpander\Expander;
+use Grasmash\Expander\Expander;
 use Robo\Result;
 use Robo\Task\BaseTask;
 use Symfony\Component\Finder\Finder;
@@ -117,7 +117,8 @@ class ReadProperties extends BaseTask
                 $projectConfig = Yaml::parse($contents);
             }
 
-            $parsedConfig = Expander::expandArrayProperties(
+            $expander = new Expander();
+            $parsedConfig = $expander->expandArrayProperties(
                 \Ckr\Util\ArrayMerger::doMerge(
                     \Ckr\Util\ArrayMerger::doMerge(
                         // Get the default properties.
