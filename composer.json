@@ -6,7 +6,7 @@
     "prefer-stable": true,
     "require": {
         "consolidation/robo": "^1.0|^2.0",
-        "grasmash/yaml-expander": "^1.2",
+        "grasmash/yaml-expander": "^1.2|^2|^3",
         "ckr/arraymerger": "^2.0"
     },
     "require-dev": {
