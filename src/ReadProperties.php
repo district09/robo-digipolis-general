@@ -117,8 +117,10 @@ class ReadProperties extends BaseTask
                 $projectConfig = Yaml::parse($contents);
             }
 
-            $expander = new Expander();
-            $parsedConfig = $expander->expandArrayProperties(
+            $expander = class_exists('\\Grasmash\\YamlExpander\\Expander') ?
+                '\\Grasmash\\YamlExpander\\Expander::expandArrayProperties' :
+                [new \Grasmash\Expander\Expander(), 'expandArrayProperties'];
+            $parsedConfig = call_user_func($expander,
                 \Ckr\Util\ArrayMerger::doMerge(
                     \Ckr\Util\ArrayMerger::doMerge(
                         // Get the default properties.
