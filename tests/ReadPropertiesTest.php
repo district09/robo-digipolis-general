@@ -5,6 +5,7 @@ namespace DigipolisGent\Tests\Robo\Task\General;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use PHPUnit\Framework\TestCase;
+use Robo\Collection\CollectionBuilder;
 use Robo\Common\CommandArguments;
 use Robo\Contract\ConfigAwareInterface;
 use Robo\Robo;
@@ -14,11 +15,11 @@ use Symfony\Component\Console\Output\NullOutput;
 class ReadPropertiesTest extends TestCase implements ContainerAwareInterface, ConfigAwareInterface
 {
 
-    use \DigipolisGent\Robo\Task\General\loadTasks;
+    use \DigipolisGent\Robo\Task\General\Tasks;
     use TaskAccessor;
     use ContainerAwareTrait;
     use CommandArguments;
-    use \Robo\Task\Base\loadTasks;
+    use \Robo\Task\Base\Tasks;
     use \Robo\Common\ConfigAwareTrait;
 
     /**
@@ -52,9 +53,7 @@ class ReadPropertiesTest extends TestCase implements ContainerAwareInterface, Co
     public function collectionBuilder()
     {
         $emptyRobofile = new \Robo\Tasks();
-
-        return $this->getContainer()
-            ->get('collectionBuilder', [$emptyRobofile]);
+        return CollectionBuilder::create($this->getContainer(), $emptyRobofile);
     }
 
     public function testRun() {

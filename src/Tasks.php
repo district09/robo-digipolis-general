@@ -2,7 +2,7 @@
 
 namespace DigipolisGent\Robo\Task\General;
 
-trait loadTasks
+trait Tasks
 {
     /**
      * Creates a DetermineProjectRoot task.

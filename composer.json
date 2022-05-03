@@ -5,12 +5,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "consolidation/robo": "^1.0|^2.0",
-        "grasmash/yaml-expander": "^1|^3",
-        "ckr/arraymerger": "^2.0"
+        "consolidation/robo": "^3.0",
+        "grasmash/yaml-expander": "^3",
+        "ckr/arraymerger": "^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.2"
+        "phpunit/phpunit": "^9.5.20"
     },
     "autoload": {
         "psr-4": {
@@ -21,9 +21,6 @@
         "psr-4": {
             "DigipolisGent\\Tests\\Robo\\Task\\General\\": "tests"
         }
-    },
-    "scripts": {
-        "test": "robo --ansi test"
     },
     "license": "MIT",
     "authors": [

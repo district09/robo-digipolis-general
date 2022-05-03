@@ -5,8 +5,9 @@ namespace DigipolisGent\Tests\Robo\Task\General;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use PHPUnit\Framework\TestCase;
-use Robo\Contract\ConfigAwareInterface;
+use Robo\Collection\CollectionBuilder;
 use Robo\Common\CommandArguments;
+use Robo\Contract\ConfigAwareInterface;
 use Robo\Robo;
 use Robo\TaskAccessor;
 use Symfony\Component\Console\Output\NullOutput;
@@ -14,11 +15,11 @@ use Symfony\Component\Console\Output\NullOutput;
 class DetermineProjectRootTest extends TestCase implements ContainerAwareInterface, ConfigAwareInterface
 {
 
-    use \DigipolisGent\Robo\Task\General\loadTasks;
+    use \DigipolisGent\Robo\Task\General\Tasks;
     use TaskAccessor;
     use ContainerAwareTrait;
     use CommandArguments;
-    use \Robo\Task\Base\loadTasks;
+    use \Robo\Task\Base\Tasks;
     use \Robo\Common\ConfigAwareTrait;
 
     /**
@@ -52,9 +53,7 @@ class DetermineProjectRootTest extends TestCase implements ContainerAwareInterfa
     public function collectionBuilder()
     {
         $emptyRobofile = new \Robo\Tasks();
-
-        return $this->getContainer()
-            ->get('collectionBuilder', [$emptyRobofile]);
+        return CollectionBuilder::create($this->getContainer(), $emptyRobofile);
     }
 
     public function testRun() {
@@ -85,7 +84,7 @@ class DetermineProjectRootTest extends TestCase implements ContainerAwareInterfa
         $finderMock
           ->expects($this->exactly(3))
           ->method('getIterator')
-          ->will($this->onConsecutiveCalls([$file1, $file2], [], []));
+          ->will($this->onConsecutiveCalls(new \ArrayIterator([$file1, $file2]), new \ArrayIterator([]), new \ArrayIterator([])));
 
         // First run, root found.
         $result = $this->taskDetermineProjectRoot(__DIR__)

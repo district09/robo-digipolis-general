@@ -168,7 +168,7 @@ class DetermineProjectRoot extends BaseTask
             }
         );
         $root =  $rootCandidates ? reset($rootCandidates) : getcwd();
-        $this->printTaskInfo(sprintf('Settings %s to %s.', $this->configKey, $root));
+        $this->printTaskInfo(sprintf('Setting %s to %s.', $this->configKey, $root));
         $this->getConfig()->set($this->configKey, $root);
 
         return Result::success($this, 'Found root at ' . $root . '.');
