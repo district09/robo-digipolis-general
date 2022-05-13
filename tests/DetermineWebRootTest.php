@@ -34,7 +34,15 @@ class DetermineWebRootTest extends DetermineProjectRootTest
         $finderMock
           ->expects($this->exactly(7))
           ->method('getIterator')
-          ->will($this->onConsecutiveCalls([$file1, $file2], [], [], [], [], [], []));
+          ->will($this->onConsecutiveCalls(
+              new \ArrayIterator([$file1, $file2]),
+              new \ArrayIterator([]),
+              new \ArrayIterator([]),
+              new \ArrayIterator([]),
+              new \ArrayIterator([]),
+              new \ArrayIterator([]),
+              new \ArrayIterator([])
+          ));
 
         // First run, root found.
         $result = $this->taskDetermineWebRoot(__DIR__)

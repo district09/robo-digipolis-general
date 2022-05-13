@@ -18,7 +18,7 @@ class DigipolisPropertiesAwareTest extends TestCase implements ContainerAwareInt
     use TaskAccessor;
     use ContainerAwareTrait;
     use CommandArguments;
-    use \Robo\Task\Base\loadTasks;
+    use \Robo\Task\Base\Tasks;
     use \Robo\Common\ConfigAwareTrait;
 
     protected $determineProjectRootCalled = false;
