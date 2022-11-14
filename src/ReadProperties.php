@@ -126,10 +126,12 @@ class ReadProperties extends BaseTask
                         // Get the default properties.
                         $this->parseConfigFiles($defaults->name('default.properties.yml')),
                         // Get the property overrides for robo packages.
-                        $this->parseConfigFiles($packageOverrides->name('properties.yml'))
+                        $this->parseConfigFiles($packageOverrides->name('properties.yml')),
+                        \Ckr\Util\ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
                     ),
                     // Add the project overrides last.
-                    $projectConfig
+                    $projectConfig,
+                    \Ckr\Util\ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
                 )
             );
 
