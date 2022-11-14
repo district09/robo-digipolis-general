@@ -4,12 +4,6 @@ namespace DigipolisGent\Robo\Task\General\Common;
 
 trait DigipolisPropertiesAware
 {
-    /**
-     * Boolean flag to indicate if the properties were already read.
-     *
-     * @var bool
-     */
-    protected $propertiesRead = false;
 
     /**
      * Read the properties from the YAML files. Determine project and web root
@@ -26,7 +20,7 @@ trait DigipolisPropertiesAware
      */
     public function readProperties($root = null, $web = null, $vendor = null)
     {
-        if (!$this->propertiesRead) {
+        if (!$this->getConfig()->get('digipolis.properties.read', false)) {
             if (is_null($root)) {
                 if (is_callable([$this, 'taskDetermineProjectRoot'])) {
                     $this->taskDetermineProjectRoot()->run();
@@ -43,7 +37,7 @@ trait DigipolisPropertiesAware
                 $vendor = $root . '/vendor';
             }
             $this->taskReadProperties([$web, $vendor])->run();
-            $this->propertiesRead = true;
+            $this->getConfig()->set('digipolis.properties.read', true);
         }
     }
 }
