@@ -2,7 +2,7 @@
 
 namespace DigipolisGent\Robo\Task\General;
 
-use Grasmash\Expander\Expander;
+use Ckr\Util\ArrayMerger;
 use Robo\Result;
 use Robo\Task\BaseTask;
 use Symfony\Component\Finder\Finder;
@@ -121,20 +121,20 @@ class ReadProperties extends BaseTask
                 '\\Grasmash\\YamlExpander\\Expander::expandArrayProperties' :
                 [new \Grasmash\Expander\Expander(), 'expandArrayProperties'];
             $parsedConfig = call_user_func($expander,
-                \Ckr\Util\ArrayMerger::doMerge(
-                    \Ckr\Util\ArrayMerger::doMerge(
+                ArrayMerger::doMerge(
+                    ArrayMerger::doMerge(
                         // Get the default properties.
                         $this->parseConfigFiles($defaults->name('default.properties.yml')),
                         // Get the property overrides for robo packages.
                         $this->parseConfigFiles($packageOverrides->name('properties.yml')),
-                        \Ckr\Util\ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
+                        ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
                     ),
                     // Add the project overrides last.
                     $projectConfig,
-                    \Ckr\Util\ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
+                    ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
                 )
             );
-
+var_dump($parsedConfig);
             $this->printTaskDebug(sprintf('Resulted config: %s', print_r($parsedConfig, true)));
 
             // Save the settings to config.
@@ -159,7 +159,7 @@ class ReadProperties extends BaseTask
      */
     protected function parseConfigFiles(Finder $files)
     {
-        $config = [];
+        $configs = [];
         foreach ($files as $file) {
             // Check if this is part of a Robo package.
             $path = $file->getRealPath();
@@ -169,8 +169,27 @@ class ReadProperties extends BaseTask
             $this->printTaskInfo(sprintf('Parsing config from %s.', $path));
             $contents = file_get_contents($path);
             $this->printTaskDebug(sprintf('Parsing %s', $contents));
-            $config += Yaml::parse($contents);
+            $configs[] = Yaml::parse($contents);
         }
-        return $config;
+
+        if (!$configs) {
+          return [];
+        }
+
+        // Sort by priority, higher priority (lower number) takes precedence.
+        usort($configs, function ($a, $b) {
+            return ($a['_priority'] ?? 0 ) - ($b['_priority'] ?? 0);
+        });
+
+        $result = array_shift($configs);
+        foreach ($configs as $config) {
+            $result = ArrayMerger::doMerge(
+                $config,
+                $result,
+                ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
+            );
+        }
+
+        return $result;
     }
 }
