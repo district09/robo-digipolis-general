@@ -134,7 +134,7 @@ class ReadProperties extends BaseTask
                     ArrayMerger::FLAG_PREVENT_DOUBLE_VALUE_WHEN_APPENDING_NUMERIC_KEYS
                 )
             );
-var_dump($parsedConfig);
+
             $this->printTaskDebug(sprintf('Resulted config: %s', print_r($parsedConfig, true)));
 
             // Save the settings to config.
