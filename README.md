@@ -59,9 +59,12 @@ $root = $this->getConfig()->get('digipolis.root.web');
 
 Reads values from yaml files (`default.properties.yml` and `properties.yml`) and
 stores them in config. Values from `default.properties.yml` will be overridden
-if the exist in a `properties.yml`. If a valid path is set for
+if they exist in a `properties.yml`. If a valid path is set for
 `digipolis.root.web` in config, and a `properties.yml` file exists in that path,
-those values will have top priority.
+those values will have top priority. Property files (both
+`default.properties.yml` and `properties.yml`) can define a `_priority` key at
+the root of the yaml. Higher priorities (lower number) take precedence over
+lower priorities (higher number).
 
 ```php
 // Search for default.properties.yml and properties.yml files in the current
